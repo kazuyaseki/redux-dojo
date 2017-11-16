@@ -1,3 +1,5 @@
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 import * as Redux from 'Redux';
 
 const counter = (state = 0, action) => {
@@ -41,15 +43,39 @@ const createStore = (reducer) => {
 }
 
 const store = createStore(counter);
+
+const Counter = ({
+  value,
+  onInclement,
+  onDeclement
+}) => (
+  <div>
+    <h1>{value}</h1>
+    <button onClick={onInclement}>+</button>
+    <button onClick={onDeclement}>-</button>
+  </div>
+);
+
 const render = () => {
-  document.body.innerText = store.getState();
-}
+  ReactDOM.render(
+    <Counter
+      value={store.getState()}
+      onInclement={() =>
+        store.dispatch({
+          type: 'INCREMENT'
+        })
+      }
+      onDeclement={() =>
+        store.dispatch({
+          type: 'DECREMENT'
+        })
+      }
+    />,
+    document.getElementById('root')
+  );
+};
 
 store.subscribe(render); //subscribeで変更を検知するようになる
 window.onload = () => {
   render();
 }
-
-document.addEventListener('click', () => {
-  store.dispatch({ type: 'INCREMENT' });
-})

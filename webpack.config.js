@@ -2,22 +2,19 @@ const webpack = require('webpack');
 
 module.exports = {
   entry: {
-      counter: __dirname + "/first-app/counter.js"
+      counter: __dirname + "/first-app/counter.jsx"
   },
   output: {
       path: __dirname + "/dist",
       filename: "[name].js"
   },
   resolve: {
-    alias: {
-      vue: 'vue/dist/vue.js'
-    },
-    extensions: [ ".js" ]
+    extensions: [ ".jsx", ".js" ]
   },
   module: {
-      loaders: [
-          { exclude: /node_modules/ }
-      ]
+    loaders: [
+        { test: /\.jsx?$/, exclude: /node_modules/, loaders: 'babel-loader' }
+    ]
   },
   plugins: []
 };
