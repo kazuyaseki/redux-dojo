@@ -2,7 +2,8 @@ const webpack = require('webpack');
 
 module.exports = {
   entry: {
-      counter: __dirname + "/first-app/counter.jsx"
+      counter: __dirname + "/first-app/counter.jsx",
+      todo: __dirname + "/todo-app/todo.jsx"
   },
   output: {
       path: __dirname + "/dist",
@@ -11,6 +12,7 @@ module.exports = {
   resolve: {
     extensions: [ ".jsx", ".js" ]
   },
+  devtool: "source-map",
   module: {
     loaders: [
         { test: /\.jsx?$/, exclude: /node_modules/, loaders: 'babel-loader' }
