@@ -35,7 +35,7 @@ const todos = (state = [], action) => {
         todo(undefined, action)
       ];
     case 'TOGGLE_TODO':
-      return state.map(t => {todo(t, action)})
+      return state.map(t => {return todo(t, action)})
     default:
       return state;
   }
@@ -66,7 +66,19 @@ class TodoApp extends Component {
         </button>
         <ul>
           {this.props.todos.map(todo => 
-            <li key={todo.id}>
+            <li key={todo.id}
+              onClick={() => {
+                store.dispatch({
+                  type: 'TOGGLE_TODO',
+                  id: todo.id
+                });
+              }}
+              style={{
+                textDecoration:
+                  todo.completed ?
+                    'line-through' :
+                    'none'
+              }}>
               {todo.text}
             </li>
           )}
