@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import * as Redux from 'Redux';
+import { combineReducers } from 'redux';
 
 const counter = (state = 0, action) => {
   switch (action.type) {
