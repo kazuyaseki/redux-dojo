@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { combineReducers, createStore } from 'redux';
 import { connect, Provider } from 'react-redux';
+import { v4 } from 'node-uuid';
+import throttle from 'lodash';
+import { loadState, saveState } from './localStorage';
 
 //array composition
 const todo = (state, action) => {
@@ -188,13 +191,20 @@ const todoApp = combineReducers({
   visibilityFilter
 });
 
-const persistedState = {
-  visibilityFilter: 'SHOW_ACTIVE'
-};
+const persistedState = loadState();
+const store = createStore(todoApp, persistedState);
+
+store.subscribe(
+  throttle(() => {
+    saveState({
+      todos: store.getState().todos
+    });
+  }, 1000)
+);
 
 window.onload = () => {
   ReactDOM.render(
-    <Provider store={createStore(todoApp, persistedState)}>
+    <Provider store={store}>
       <TodoApp />
     </Provider>,
     document.getElementById('root')
