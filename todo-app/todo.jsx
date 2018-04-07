@@ -188,9 +188,13 @@ const todoApp = combineReducers({
   visibilityFilter
 });
 
+const persistedState = {
+  visibilityFilter: 'SHOW_ACTIVE'
+};
+
 window.onload = () => {
   ReactDOM.render(
-    <Provider store={createStore(todoApp)}>
+    <Provider store={createStore(todoApp, persistedState)}>
       <TodoApp />
     </Provider>,
     document.getElementById('root')
