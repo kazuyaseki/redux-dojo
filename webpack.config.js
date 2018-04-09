@@ -1,26 +1,21 @@
-const webpack = require('webpack');
-const path = require('path');
+import path from 'path';
 
-module.exports = {
-  entry: {
-    counter: __dirname + '/first-app/counter.jsx',
-    todo: __dirname + '/todo-app/todo.jsx'
-  },
+export default {
+  devtool: 'eval',
+  entry: './todo-app/index',
   output: {
-    path: __dirname + '/dist',
-    filename: '[name].js'
+    path: path.join(__dirname, 'dist'),
+    filename: 'bundle.js',
+    publicPath: '/static/'
   },
-  resolve: {
-    extensions: ['.jsx', '.js'],
-    alias: {
-      react: path.resolve('./node_modules/react')
-    }
-  },
-  devtool: 'source-map',
   module: {
     loaders: [
-      { test: /\.jsx?$/, exclude: /node_modules/, loaders: 'babel-loader' }
+      {
+        test: /\.js$/,
+        loaders: ['babel-loader'],
+        exclude: /node_modules/,
+        include: __dirname
+      }
     ]
-  },
-  plugins: []
+  }
 };
